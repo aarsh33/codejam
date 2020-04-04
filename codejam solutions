@@ -1,0 +1,335 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+int t;
+cin>>t;
+int d=t;
+
+while(t--)
+{
+ cout<<"Case #"<<d-t<<": ";   
+int n;
+cin>>n;
+int a[n][n]={0},tra=0,rc=0,cc=0;
+for(int i=0;i<n;i++)
+{set<int> s;
+for(int j=0;j<n;j++)
+{
+    cin>>a[i][j];
+    s.insert(a[i][j]);
+    if(i==j)
+    tra+=a[i][j];
+}
+if(s.size()!=n)
+rc++;
+}
+for(int i=0;i<n;i++)
+{
+    set<int> s;
+    for(int j=0;j<n;j++)
+    {
+        s.insert(a[j][i]);
+    }
+    if(s.size()!=n)
+    cc++;
+}
+
+
+
+
+
+cout<<tra<<" "<<rc<<" "<<cc;
+
+cout<<endl;
+}
+
+}
+
+
+
+
+
+The above one is the 1st problem
+
+
+
+
+#include <iostream>
+
+using namespace std;
+
+int main() {
+int t;
+cin>>t;
+int d=t;
+
+while(t--)
+{
+ cout<<"Case #"<<d-t<<": ";   
+
+string s;
+cin>>s;
+int aa=s[0]-'0';
+    for(int x=0;x<aa;x++)
+    cout<<"(";
+
+for(int i=0;i<s.length()-1;i++)
+{
+    int a=s[i]-'0';
+    int b=s[i+1]-'0';
+   
+    if(a>b){
+    cout<<a;
+    for(int x=0;x<a-b;x++)
+    cout<<")";}
+    else
+    {
+        cout<<a;
+        for(int x=0;x<b-a;x++)
+        cout<<"(";
+      
+        
+        
+    }
+    
+    
+}
+int v=s[s.length()-1]-'0';
+cout<<v;
+for(int i=0;i<v;i++)
+cout<<")";
+cout<<endl;
+}
+
+}
+
+
+
+
+
+The above is the 2nd code
+
+
+
+
+
+#include <bits/stdc++.h>
+
+using namespace std;
+#define pii pair <int,int>
+int main() {
+int t;
+cin>>t;
+int d=t;
+
+while(t--)
+{
+ 
+int n,flag=0;
+cin>>n;
+vector<pair <pair <int,int>,int > > v;
+vector<pair <int,char> >s1;
+for(int i=0;i<n;i++)
+{
+    int a,b;
+    cin>>a>>b;
+    v.push_back(make_pair(make_pair(a,b),i));
+    
+}
+sort(v.begin(),v.end());
+int cc=0,jj=0;
+for(int i=0;i<n;i++)
+if(v[i].first.first>=cc)
+{
+    s1.push_back(make_pair(v[i].second,'C'));
+    cc=v[i].first.second;
+}
+else if(v[i].first.first>=jj)
+{
+    s1.push_back(make_pair(v[i].second,'J'));
+    jj=v[i].first.second;
+}
+else
+{
+    flag=1;
+    break;
+}
+cout<<"Case #"<<d-t<<": ";
+if(!flag)
+{
+    
+    sort(s1.begin(),s1.end());
+    for(int i=0;i<n;i++)
+    cout<<s1[i].second;
+    cout<<endl;
+    
+    
+}
+else
+{
+    cout<<"IMPOSSIBLE"<<endl;
+}
+
+
+}
+
+}
+
+
+
+
+The above one is the 3rd code
+
+
+
+
+
+
+
+#include <bits/stdc++.h>
+
+using namespace std;
+#define maaaa int
+int f(int a)
+{
+    return a;
+}
+
+int sqr[60][60], n, k, t;
+bool row_safe[60][60], col_safe[60][60], solved;
+
+
+void solverr(int row, int col, int m) {
+    if (row == n && col == n + 1 && m == k && !solved) {
+        solved = true;
+        cout << "Case #" << t << ": " << "POSSIBLE\n";
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 1; j <= n; ++j) {
+                cout << sqr[i][j] << " ";
+            }
+            cout << "\n";
+        }
+        return;
+    } else if (row > n) {
+        return;
+    } else if (col > n) {
+        solverr(row + 1, 1, m);
+    }
+    for (int i = 1; i <= n && !solved; ++i) {
+        if (!row_safe[row][i] && !col_safe[col][i]) {
+            row_safe[row][i] = col_safe[col][i] = true;
+            if (row == col) {
+                m += i;
+            }
+            sqr[row][col] = i;
+
+            solverr(row, col + 1, m);
+
+            row_safe[row][i] = col_safe[col][i] = false;
+            if (row == col) {
+                m -= i;
+            }
+            sqr[row][col] = 0;
+        }
+    }
+}
+
+int main() {
+    int T;
+    scanf(" %d", &T);
+    for (t = 1; t <= T; ++t) {
+        scanf(" %d %d", &n, &k);
+        solverr(1, 1, 0);
+        if (!solved) {
+            cout << "Case #" << t << ": " << "IMPOSSIBLE\n";
+        }
+        solved = false;
+    }
+    return 0;
+}
+
+
+
+
+
+The above one is the 5th code
+
+
+
+
+
+
+from itertools import combinations
+import numpy as np
+import sys
+
+def complement(bits): return [
+    '_' if b is '_' else 
+    '1' if b=='0' else '0' 
+    for b in bits
+]
+
+class QuantumArray():
+    def __init__(self, B):
+        self.bits = ['_'] * B
+        self.unkowns = list(range(B))
+        self.read(10)
+        self.run()
+
+    def read(self, n):
+        for _ in range(n):
+            i = self.unkowns.pop()
+            self.bits[i] = self.read_bit(i+1)
+            self.unkowns = self.unkowns[::-1]
+        self.update_states()
+
+    def read_bit(self, i):
+        print(i, flush=True)
+        return input()
+
+    def update_states(self):
+        self.bits_c  = complement(self.bits)
+        self.bits_cr = self.bits_c[::-1]
+        self.bits_r  = complement(self.bits_cr)
+        self.states = [self.bits, self.bits_c, self.bits_cr, self.bits_r]
+
+    def get_test_idx(self):
+        candidates = list(set(range(B)) - set(self.unkowns))
+        max_states = len(set(map(tuple, self.states)))
+        for idx in combinations(candidates, 2):
+            num_states = len(set(
+                tuple(np.take(state, idx))
+                for state in self.states
+            ))
+            if num_states == max_states: return idx
+
+    def collapse(self):        
+        test_idx = self.get_test_idx()
+        test = [self.read_bit(i+1) for i in test_idx]
+                
+        self.bits = next(state
+            for state in self.states
+            if test == list(np.take(state, test_idx))
+        )
+
+    def run(self):
+        while True:
+            self.collapse()
+            try: self.read(8)
+            except IndexError: break
+    
+
+T, B = map(int, input().split())
+print('B:', B, file=sys.stderr)
+for _ in range(T): 
+    array = QuantumArray(B)
+    print('guess:', ''.join(array.bits), file=sys.stderr)
+    print(''.join(array.bits), flush=True)
+    if input() == 'N': sys.exit()
+    
+    
+    
+    
+    The above is the 4th one -the Interactive
